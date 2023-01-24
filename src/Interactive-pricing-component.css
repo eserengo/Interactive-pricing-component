@@ -1,0 +1,346 @@
+/*
+ Name: Interactive pricing component
+ Description: A Frontendmentor.io coding challenge
+ Author: Federico Borzani
+ Author URL:  https://github.com/eserengo/
+*/
+
+/* --- TAGS --- */
+
+:root {
+
+  /* --- FONTS --- */
+
+  font-size: 16px;
+  text-rendering: optimizeLegibility;
+  font-family: "Manrope";
+  font-weight: 600;
+  --Bold: 800;
+
+  /* --- COLOR PALETTE --- */
+
+  --Soft-Cyan-FOR-Full-Slider-Bar: hsl(174, 77%, 80%);
+  --Strong-Cyan-FOR-Slider-Background: hsl(174, 86%, 45%);
+  --Light-Grayish-Red-FOR-Discount-Background-: hsl(14, 92%, 95%);
+  --Light-Red-FOR-Discount-Text: hsl(15, 100%, 70%);
+  --Pale-Blue-FOR-CTA-Text: hsl(226, 100%, 87%);
+  --White-FOR-Pricing-Component-Background: hsl(0, 0%, 100%);
+  --Very-Pale-Blue-FOR-Main-Background: hsl(230, 100%, 99%);
+  --Light-Grayish-Blue-FOR-Empty-Slider-Bar: hsl(224, 65%, 95%);
+  --Light-Grayish-Blue-FOR-Toggle-Background: hsl(223, 50%, 87%);
+  --Grayish-Blue-FOR-Text: hsl(225, 20%, 60%);
+  --Dark-Desaturated-Blue-FOR-Text-and-CTA-Background: hsl(227, 35%, 25%);
+}
+
+* {
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: 0%;
+  margin: 0%;
+  user-select: none;
+}
+
+body {
+  min-height: 100vh;
+}
+
+ul, li {
+  list-style-type: none;
+}
+
+h1 {
+  font-size: 125%;
+  font-weight: var(--Bold);
+  color: var(--Dark-Desaturated-Blue-FOR-Text-and-CTA-Background);
+  padding: 5%;
+}
+
+h2 {
+  font-size: 75%;
+  color: var(--Grayish-Blue-FOR-Text);
+  padding: 5%;
+}
+
+h3 {
+  font-size: 150%;
+  font-weight: var(--Bold);
+  color: var(--Dark-Desaturated-Blue-FOR-Text-and-CTA-Background);
+}
+
+/* --- GENERAL CLASSES --- */
+
+.hidden {
+  display: none;
+}
+
+.selectable:hover {
+  cursor: pointer;
+  user-select: all;
+}
+
+.rel {
+  position: relative;
+}
+
+.abs {
+  position: absolute;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.center {
+  text-align: center;
+}
+
+.flex-col {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.flex-row {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.flex-row.center,
+.flex-col.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.abs.center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.inline {
+  display: inline;
+  vertical-align: middle;
+}
+
+.inactive {
+  opacity: 0.25;
+}
+
+.blur {
+  filter: blur(4px);
+}
+
+/* --- SPECIFIC CLASSES --- */
+
+.body {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  min-width: 300px;
+}
+
+.header {
+  background-image: url("./images/pattern-circles.svg"), url("./images/bg-pattern.svg");
+  background-repeat: no-repeat, no-repeat;
+  background-size: 40% 55%, cover;
+  background-position: 50% 40%, left;
+  width: 100vw;
+  padding: 15% 10% 25%;
+  text-align: center;
+  z-index: -1;
+}
+
+.card {
+  width: 90vw;
+  margin: -10% 5% 10%;
+  z-index: 1;
+  border: 1px solid var(--Light-Grayish-Blue-FOR-Empty-Slider-Bar);
+  box-shadow: 0px 4px 8px var(--Light-Grayish-Blue-FOR-Empty-Slider-Bar);
+  border-radius: 8px;
+  padding: 10% 5%;
+}
+
+.para {
+  font-size: 75%;
+  color: var(--Grayish-Blue-FOR-Text);
+  padding: 2.5%;
+}
+
+#form-action {
+  width: 100%;
+}
+
+.checkbox > .para {
+  margin: 0%;
+  padding: 0%;
+}
+
+input[type="checkbox"]{
+  appearance: none;
+}
+
+input[type="range"]{
+  appearance: none;
+}
+
+.checkbox {
+  padding: 5% 0%;
+  border-bottom: 1px solid var(--Light-Grayish-Blue-FOR-Empty-Slider-Bar);
+  position: relative;
+}
+
+.checkbox > .para {
+  margin-left: 5%;
+}
+
+
+.checkbox > .para:first-of-type {
+  margin: 0% 20% 0% 0%;
+}
+
+#checkbox {
+  border-radius: 16px;
+  width: 44px;
+  height: 22px;
+  background-color: var(--Light-Grayish-Blue-FOR-Toggle-Background);
+  color: var(--White-FOR-Pricing-Component-Background);
+  position: absolute;
+  left: 36%;
+}
+
+#checkbox::after {
+  content: "";
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--White-FOR-Pricing-Component-Background);
+  border-radius: 50%;
+  background-color: var(--White-FOR-Pricing-Component-Background);
+  position: absolute;
+  top: 16%;
+  left: 8%;
+}
+
+#range {
+  border-radius: 16px;
+  width: 100%;
+  height: 8px;
+  background-color: var(--Soft-Cyan-FOR-Full-Slider-Bar);
+  margin: 10% 0%;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  margin-bottom: 16px;
+  width: 16px;
+  height: 16px;
+  padding: 16px;
+  border: 1px solid var(--Strong-Cyan-FOR-Slider-Background);
+  border-radius: 50%;
+  box-shadow: 2px 2px 16px var(--Strong-Cyan-FOR-Slider-Background);
+  background-color: var(--Strong-Cyan-FOR-Slider-Background);
+  background-image: url("./images/icon-slider.svg");
+  background-repeat: no-repeat;
+  background-size: 50% 50%;
+  background-position: center;
+}
+
+.discount {
+  background-color: var(--Light-Grayish-Red-FOR-Discount-Background-);
+  color: var(--Light-Red-FOR-Discount-Text);
+  font-size: 75%;
+  border-radius: 16px;
+  padding: 1.5%;
+  margin-left: 5%;
+}
+
+.wrapper {
+  padding: 10%;
+}
+
+.floating {
+  padding: 5%;
+}
+
+.button {
+  width: 10rem;
+  height: 2.5rem;
+  border: 1px solid var(--Dark-Desaturated-Blue-FOR-Text-and-CTA-Background);
+  border-radius: 2rem;
+  background-color: var(--Dark-Desaturated-Blue-FOR-Text-and-CTA-Background);
+  color: var(--Grayish-Blue-FOR-Text);
+  font-size: 75%;
+}
+
+.footer {
+  font-size: 50%;
+  text-align: center;
+}
+
+.anchor {
+  color: var(--Strong-Cyan-FOR-Slider-Background);
+}
+
+.modal {
+  position: fixed;
+  z-index: 2;
+  width: 70vw;
+  height: 50vh;
+  top: 25%;
+  left: 15%;
+  background-color: var(--White-FOR-Pricing-Component-Background);
+  border: 1px solid var(--Light-Grayish-Blue-FOR-Empty-Slider-Bar);
+  box-shadow: 0px 4px 8px var(--Light-Grayish-Blue-FOR-Empty-Slider-Bar);
+}
+
+.modal.check {
+  width: 32%;
+  height: auto;
+  border: 1px solid var(--Strong-Cyan-FOR-Slider-Background);
+  border-radius: 50%;
+  padding: 3%;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* --- MEDIA QUERIES --- */
+
+@media screen and (width > 375px) {
+  .body {
+    max-width: 900px;
+    margin: 0% auto;
+  }
+  .floating {
+    margin-top: -33%;
+    padding: 0%;
+    text-align: center;
+    width: 8rem;
+  }
+  .checkbox {
+    padding: 5% 15%;
+  }
+  #checkbox {
+    left: 40%;
+  }
+  .primary {
+    margin-top: -20%;
+  }
+  .modal {
+  width: 50vw;
+  height: 50vh;
+  top: 25%;
+  left: 25%;
+  }
+  .modal.check {
+    width: 16%;
+  }
+}
